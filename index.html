@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="container py-4">
+    <h3 class="mb-4">Upcoming Matches</h3>
+    {% for match in matches %}
+    <div class="card match-card p-3">
+        <div class="d-flex justify-content-between align-items-center">
+            <strong>{{ match.team1 }}</strong>
+            <span class="text-danger small">{{ match.time }}</span>
+            <strong>{{ match.team2 }}</strong>
+        </div>
+        <a href="/builder/{{ match.id }}" class="btn btn-outline-primary btn-sm mt-3">Create Team</a>
+    </div>
+    {% endfor %}
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="d-flex justify-content-center">
+    <div style="width: 100%; max-width: 500px; background: #fff; min-height: 100vh;">
+        <div class="team-builder-header">
+            <div class="d-flex justify-content-between">
+                <span>Players: <b id="count">0</b>/11</span>
+                <span>Credits: <b id="credits">100.0</b></span>
+            </div>
+        </div>
+        <div class="role-tabs">
+            <span class="active tab-btn" onclick="filterRole('ALL', this)">ALL</span>
+            <span class="tab-btn" onclick="filterRole('WK', this)">WK</span>
+            <span class="tab-btn" onclick="filterRole('BAT', this)">BAT</span>
+            <span class="tab-btn" onclick="filterRole('AR', this)">AR</span>
+            <span class="tab-btn" onclick="filterRole('BOWL', this)">BOWL</span>
+        </div>
+        <div class="player-list p-2">
+            {% for p in players %}
+            <div class="player-card" data-role="{{ p.role }}" id="card-{{ p.id }}">
+                <div><b>{{ p.name }}</b><br><small class="text-muted">{{ p.team }} | {{ p.role }}</small></div>
+                <div class="text-end">
+                    <b>{{ p.credits }}</b>
+                    <input type="checkbox" class="p-check form-check-input ms-2" data-id="{{ p.id }}" data-name="{{ p.name }}" data-credits="{{ p.credits }}">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="fixed-footer">
+            <button id="main-next-btn" class="btn btn-dream" disabled onclick="saveTeamAndGo()">CONTINUE</button>
+        </div>
+    </div>
+    <script>
+        let myTeam = []; let cr = 100.0;
+        function filterRole(role, el) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            document.querySelectorAll('.player-card').forEach(c => {
+                c.style.display = (role === 'ALL' || c.dataset.role === role) ? 'flex' : 'none';
+            });
+        }
+        document.querySelectorAll('.p-check').forEach(cb => {
+            cb.addEventListener('change', e => {
+                let cost = parseFloat(e.target.dataset.credits);
+                let pId = e.target.dataset.id;
+                let pName = e.target.dataset.name;
+                if(e.target.checked) {
+                    if(myTeam.length >= 11 || (cr - cost) < 0) { e.target.checked = false; return alert("Limit!"); }
+                    myTeam.push({id: pId, name: pName}); cr -= cost;
+                    document.getElementById('card-'+pId).classList.add('selected');
+                } else {
+                    myTeam = myTeam.filter(x => x.id !== pId); cr += cost;
+                    document.getElementById('card-'+pId).classList.remove('selected');
+                }
+                document.getElementById('count').innerText = myTeam.length;
+                document.getElementById('credits').innerText = cr.toFixed(1);
+                document.getElementById('main-next-btn').disabled = myTeam.length !== 11;
+            });
+        });
+        function saveTeamAndGo() {
+            localStorage.setItem('finalTeamData', JSON.stringify(myTeam));
+            window.location.href = '/captain-selection';
+        }
+    </script>
+</body>
+</html>

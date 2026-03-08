@@ -1,0 +1,20 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap');
+:root { --d11-red: #e11d48; --d11-green: #28a745; --dark-bg: #111; }
+body { background-color: #f0f2f5; font-family: 'Kanit', sans-serif; margin: 0; padding-bottom: 100px; }
+.team-builder-header { background: linear-gradient(180deg, #000 0%, #222 100%); color: white; padding: 20px; position: sticky; top: 0; z-index: 1000; }
+.role-tabs { display: flex; justify-content: space-around; background: white; padding: 15px 0; border-bottom: 1px solid #ddd; font-weight: 600; }
+.tab-btn { cursor: pointer; padding: 5px 10px; transition: 0.3s; }
+.tab-btn.active { color: var(--d11-red); border-bottom: 3px solid var(--d11-red); }
+.player-card { background: white; margin: 10px 15px; padding: 15px; display: flex; justify-content: space-between; align-items: center; border-radius: 12px; border: 1px solid #e0e0e0; }
+.player-card.selected { background-color: #fff5f6; border-color: #ffb3ba; }
+.btn-dream { background: var(--d11-green); color: white; border-radius: 10px; font-weight: 600; width: 100%; padding: 15px; border: none; text-transform: uppercase; }
+.btn-preview { background: #34495e; color: white; border-radius: 10px; font-weight: 600; width: 100%; padding: 10px; border: none; margin-bottom: 10px; }
+.fixed-footer { position: fixed; bottom: 0; width: 100%; max-width: 500px; left: 50%; transform: translateX(-50%); background: white; padding: 15px; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); z-index: 2000; }
+
+/* Ground Preview Styles */
+#preview-overlay { display:none; position:fixed; top:0; left:50%; transform:translateX(-50%); width:100%; max-width:500px; height:100%; background:rgba(0,0,0,0.9); z-index:3000; color:white; overflow-y:auto; }
+.ground-bg { background: linear-gradient(to bottom, #2ecc71, #27ae60); min-height:100vh; padding: 20px 10px; position:relative; }
+.preview-row { display:flex; justify-content:center; flex-wrap:wrap; margin-bottom:30px; }
+.preview-player { text-align:center; margin:10px; width:70px; }
+.player-icon { background:white; color:black; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 5px; font-weight:bold; }
+.player-name-tag { background:rgba(0,0,0,0.7); font-size:0.7rem; padding:2px 5px; border-radius:4px; }
